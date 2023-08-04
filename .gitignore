@@ -18,3 +18,5 @@ override.tf.json
 terraform.rc
 
 node_modules
+
+.DS_Store

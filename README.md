@@ -1,5 +1,7 @@
 # OCI Database Management Workshop
 
+[Workshop Content with LiveLabs format](https://vmleon.github.io/oci-db-management/terraform/livelabs/workshops/freetier/index.html)
+
 ## Deployment
 
 ```bash

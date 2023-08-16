@@ -1,47 +1,7 @@
 # OCI Database Management Workshop
 
-[Workshop Content with LiveLabs format](https://vmleon.github.io/oci-db-management/terraform/livelabs/workshops/freetier/index.html)
+[Workshop Content with LiveLabs format](https://vmleon.github.io/oci-db-management/livelabs/workshops/freetier/index.html)
 
-## Deployment
+## Overview
 
-```bash
-git clone https://github.com/vmleon/oci-db-management.git
-```
-
-```bash
-cd oci-db-management
-```
-
-```bash
-cd scripts
-```
-
-```bash
-npm install
-```
-
-```bash
-cd ..
-```
-
-```bash
-npx zx scripts/tfvars.mjs
-```
-
-Answer with the compartment name and type `ENTER`.
-
-```bash
-cd terraform
-```
-
-```bash
-terraform init
-```
-
-```bash
-terraform apply -auto-approve
-```
-
-```bash
-cd ..
-```
+This workshop will help you to learn Oracle Cloud Database Management and set up a few Oracle Databases of different flavors.

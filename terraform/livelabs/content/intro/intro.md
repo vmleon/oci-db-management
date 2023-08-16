@@ -15,9 +15,6 @@ In this workshop, you will:
 - XXX.
 - XXX.
 
-Watch the video below for a quick walk-through of the workshop.
-[Database Management Content](videohub:xxx)
-
 ### Prerequisites
 
 - An Oracle Free Tier or Paid Cloud Account

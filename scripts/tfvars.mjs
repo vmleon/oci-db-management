@@ -1,12 +1,11 @@
 #!/usr/bin/env zx
 
 import {
-  getNamespace,
   getRegions,
   getTenancyId,
   searchCompartmentIdByName,
 } from "./lib/oci.mjs";
-import { setVariableFromEnvOrPrompt, exitWithError } from "./lib/utils.mjs";
+import { setVariableFromEnvOrPrompt } from "./lib/utils.mjs";
 import Mustache from "mustache";
 
 const shell = process.env.SHELL | "/bin/zsh";
@@ -42,3 +41,7 @@ const output = Mustache.render(tfvarsTemplate, {
 });
 
 await fs.writeFile("terraform/terraform.tfvars", output);
+
+console.log(
+  `Terraform variables created at ${chalk.yellow("terraform/terraform.tfvars")}`
+);

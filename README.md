@@ -45,14 +45,3 @@ terraform apply -auto-approve
 ```bash
 cd ..
 ```
-
-## Clean up
-
-
-```bash
-cd terraform
-```
-
-```bash
-terraform destroy -auto-approve
-```

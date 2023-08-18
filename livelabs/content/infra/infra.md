@@ -51,28 +51,76 @@ In this lab, you will create the infrastructure to complete this workshop on Ora
 
   ![xxx](images/xxx.png)
 
-6. Terraform needs a configuration file called `terraform.tfvars` that you are going to create by running the `tfvars.mjs` script.
+## Task 2: Create the Foundational Infrastructure
+
+1. Terraform needs a configuration file called `terraform.tfvars` that you are going to create by running the `tfvars.mjs` script.
 
     ```bash
-    <copy>npx zx scripts/tfvars.mjs</copy>
+    <copy>npx zx scripts/tfvars.mjs env</copy>
     ```
 
-7. During the execution of the script, it will ask for the compartment. You just type _**ENTER**_ to select the root compartment. If you are familiar with OCI compartments, then feel free to pick an existing compartment name.
+2. During the execution of the script, it will ask for the compartment. You just type _**ENTER**_ to select the root compartment. If you are familiar with OCI compartments, then feel free to pick an existing compartment name.
 
   ![xxx](images/xxx.png)
 
-## Task 2: Create Infrastructure
-
-1. From the **Cloud Shell**, run the following command to change to the terraform directory:
+3. From the **Cloud Shell**, run the following command to change to the terraform directory:
 
     ```bash
-    <copy>cd terraform</copy>
+    <copy>cd terraform/env</copy>
     ```
 
-2. Run the Terraform `apply` to create the infrastructure.
+4. Run the Terraform `init` to prepare Terraform.
+
+    ```bash
+    <copy>terraform init</copy>
+    ```
+
+5. Run the Terraform `apply` to create the infrastructure.
 
     ```bash
     <copy>terraform apply -auto-approve</copy>
+    ```
+
+6. Change the directory to the root.
+
+    ```bash
+    <copy>cd ../..</copy>
+    ```
+
+## Task 3: Create the Database Infrastructure
+
+1. Terraform needs a configuration file called `terraform.tfvars` that you are going to create by running the `tfvars.mjs` script.
+
+    ```bash
+    <copy>npx zx scripts/tfvars.mjs db</copy>
+    ```
+
+2. During the execution of the script, it will ask for the compartment. You just type _**ENTER**_ to select the root compartment. If you are familiar with OCI compartments, then feel free to pick an existing compartment name.
+
+  ![xxx](images/xxx.png)
+
+3. From the **Cloud Shell**, run the following command to change to the terraform directory:
+
+    ```bash
+    <copy>cd terraform/db</copy>
+    ```
+
+4. Run the Terraform `init` to prepare Terraform.
+
+    ```bash
+    <copy>terraform init</copy>
+    ```
+
+5. Run the Terraform `apply` to create the infrastructure.
+
+    ```bash
+    <copy>terraform apply -auto-approve</copy>
+    ```
+
+6. Change the directory to the root.
+
+    ```bash
+    <copy>cd ../..</copy>
     ```
 
 You may now [proceed to the next lab](#next).

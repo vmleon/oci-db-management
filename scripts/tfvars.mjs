@@ -1,47 +1,91 @@
 #!/usr/bin/env zx
 
-import {
-  getRegions,
-  getTenancyId,
-  searchCompartmentIdByName,
-} from "./lib/oci.mjs";
-import { setVariableFromEnvOrPrompt } from "./lib/utils.mjs";
+import { getOutputValues } from "./lib/terraform.mjs";
 import Mustache from "mustache";
+import { readEnvJson } from "./lib/utils.mjs";
 
 const shell = process.env.SHELL | "/bin/zsh";
 $.shell = shell;
 $.verbose = false;
 
-const tenancyId = await getTenancyId();
+const { _ } = argv;
+const [action] = _;
 
-const regions = await getRegions();
-const regionName = await setVariableFromEnvOrPrompt(
-  "OCI_REGION",
-  "OCI Region name",
-  async () => printRegionNames(regions)
-);
-
-const compartmentName = await setVariableFromEnvOrPrompt(
-  "COMPARTMENT_NAME",
-  "Compartment Name (root)"
-);
-
-const compartmentId = await searchCompartmentIdByName(
-  compartmentName || "root"
-);
-
-const tfvarsTemplate = await fs.readFile(
-  "terraform/terraform.tfvars.mustache",
-  "utf-8"
-);
-const output = Mustache.render(tfvarsTemplate, {
-  tenancyId,
-  regionName,
+const {
   compartmentId,
-});
+  compartmentName,
+  regionName,
+  tenancyId,
+  publicKeyContent,
+} = await readEnvJson();
 
-await fs.writeFile("terraform/terraform.tfvars", output);
+if (action === "env") {
+  await envTfvars();
+  process.exit(0);
+}
 
-console.log(
-  `Terraform variables created at ${chalk.yellow("terraform/terraform.tfvars")}`
-);
+if (action === "db") {
+  await dbTFvars();
+  process.exit(0);
+}
+
+console.log("Usage:");
+console.log("\tnpx zx scripts/tfvars.mjs env");
+console.log("\tnpx zx scripts/tfvars.mjs db");
+
+process.exit(0);
+
+async function envTfvars() {
+  const tfVarsPath = "terraform/env/terraform.tfvars";
+
+  const tfvarsTemplate = await fs.readFile(`${tfVarsPath}.mustache`, "utf-8");
+
+  const output = Mustache.render(tfvarsTemplate, {
+    tenancyId,
+    regionName,
+    compartmentId,
+  });
+
+  console.log(
+    `Terraform will deploy resources in ${chalk.yellow(
+      regionName
+    )} in compartment ${
+      compartmentName ? chalk.yellow(compartmentName) : chalk.yellow("root")
+    }`
+  );
+
+  await fs.writeFile(tfVarsPath, output);
+
+  console.log(`File ${chalk.yellow(tfVarsPath)} created`);
+}
+
+async function dbTFvars() {
+  const tfOutput = await getOutputValues("./terraform/env");
+
+  const tfVarsPath = "terraform/db/terraform.tfvars";
+
+  const tfvarsTemplate = await fs.readFile(`${tfVarsPath}.mustache`, "utf-8");
+
+  const output = Mustache.render(tfvarsTemplate, {
+    tenancyId,
+    regionName,
+    compartmentId,
+    ssh_public_key: publicKeyContent,
+    deploy_id: tfOutput.deploy_id,
+    vault_id: tfOutput.vault_id,
+    master_key_id: tfOutput.master_key_id,
+    privatesubnet_id: tfOutput.privatesubnet_id,
+  });
+
+  console.log(
+    `Terraform will deploy resources in ${chalk.yellow(
+      regionName
+    )} in compartment ${
+      compartmentName ? chalk.yellow(compartmentName) : chalk.yellow("root")
+    }`
+  );
+
+  await fs.writeFile(tfVarsPath, output);
+
+  console.log(`File ${chalk.yellow(tfVarsPath)} created`);
+}

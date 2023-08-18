@@ -17,7 +17,7 @@ Estimated Lab Time: 10 minutes
 1. Make sure you are in the Terraform folder.
 
     ```
-    <copy>cd ~/oci-db-management/terraform</copy>
+    <copy>cd ~/oci-db-management/terraform/db</copy>
     ```
 
   ![xxx](images/xxx.png)
@@ -33,8 +33,27 @@ Estimated Lab Time: 10 minutes
 3. After a few minutes, you will see the message confirming terraform destroy completed.
 
   ![xxx](images/xxx.png)
+4. Make sure you are in the Terraform folder.
 
-4. Congratulations, you have finished the cleanup.
+    ```
+    <copy>cd ~/oci-db-management/terraform/env</copy>
+    ```
+
+  ![xxx](images/xxx.png)
+
+5. Run the `destroy` command on Terraform.
+
+    ```
+    <copy>terraform destroy -auto-approve</copy>
+    ```
+
+  ![xxx](images/xxx.png)
+
+6. After a few minutes, you will see the message confirming terraform destroy completed.
+
+  ![xxx](images/xxx.png)
+
+7. Congratulations, you have finished the cleanup.
 
 ## Acknowledgements
 
